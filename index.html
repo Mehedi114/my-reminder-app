@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2387/2387635.png">
 </head>
 <body>
     <div class="container">
@@ -91,16 +94,16 @@
             <p id="progressText" class="progress-text">0% কাজ সম্পন্ন</p>
         </div>
 
+        <!-- অ্যালার্ম টেস্ট -->
+        <div class="test-section">
+            <button class="btn-test" onclick="testAlarm()">🔊 অ্যালার্ম সাউন্ড টেস্ট করুন</button>
+        </div>
+
         <!-- সব মুছে ফেলুন -->
         <div class="danger-zone">
             <button class="btn-clear" onclick="clearAllTasks()">🗑️ সব কাজ মুছে ফেলুন</button>
         </div>
     </div>
-
-    <!-- অ্যালার্ম সাউন্ড -->
-    <audio id="alarmSound" preload="auto">
-        <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
-    </audio>
 
     <!-- রিমাইন্ডার পপআপ -->
     <div id="reminderPopup" class="reminder-popup" style="display:none;">

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 আমার কাজের রিমাইন্ডার</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 আমার কাজের রিমাইন্ডার</h1>
+            <p class="subtitle">সারাদিনের কাজ মনে রাখুন সহজে</p>
+            <div id="currentTime" class="current-time"></div>
+        </header>
+
+        <!-- নোটিফিকেশন পারমিশন -->
+        <div id="notifBanner" class="notif-banner" style="display:none;">
+            <p>🔔 নোটিফিকেশন চালু করুন যেন রিমাইন্ডার পান!</p>
+            <button onclick="requestNotifPermission()">চালু করুন</button>
+        </div>
+
+        <!-- কাজ যোগ করার ফর্ম -->
+        <div class="add-task-section">
+            <h2>➕ নতুন কাজ যোগ করুন</h2>
+            <div class="form-group">
+                <label>কাজের নাম:</label>
+                <input type="text" id="taskName" placeholder="যেমন: অফিসের রিপোর্ট তৈরি করা">
+            </div>
+            <div class="form-group">
+                <label>সময়:</label>
+                <input type="time" id="taskTime">
+            </div>
+            <div class="form-group">
+                <label>কত মিনিট পর পর মনে করাবে:</label>
+                <select id="repeatInterval">
+                    <option value="0">শুধু একবার</option>
+                    <option value="5">প্রতি ৫ মিনিট</option>
+                    <option value="10">প্রতি ১০ মিনিট</option>
+                    <option value="15">প্রতি ১৫ মিনিট</option>
+                    <option value="30">প্রতি ৩০ মিনিট</option>
+                    <option value="60">প্রতি ১ ঘণ্টা</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>গুরুত্ব:</label>
+                <select id="taskPriority">
+                    <option value="high">🔴 খুব জরুরি</option>
+                    <option value="medium" selected>🟡 মাঝারি</option>
+                    <option value="low">🟢 কম জরুরি</option>
+                </select>
+            </div>
+            <button class="btn-add" onclick="addTask()">✅ কাজ যোগ করুন</button>
+        </div>
+
+        <!-- কাজের তালিকা -->
+        <div class="task-list-section">
+            <h2>📝 আজকের কাজের তালিকা</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterTasks('all', this)">সব</button>
+                <button class="filter-btn" onclick="filterTasks('pending', this)">বাকি আছে</button>
+                <button class="filter-btn" onclick="filterTasks('done', this)">সম্পন্ন</button>
+            </div>
+            <div id="taskList" class="task-list">
+                <p class="empty-message">কোনো কাজ যোগ করা হয়নি। উপরে থেকে কাজ যোগ করুন! 👆</p>
+            </div>
+        </div>
+
+        <!-- পরিসংখ্যান -->
+        <div class="stats-section">
+            <h2>📊 আজকের পরিসংখ্যান</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalTasks">0</span>
+                    <span class="stat-label">মোট কাজ</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="doneTasks">0</span>
+                    <span class="stat-label">সম্পন্ন</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="pendingTasks">0</span>
+                    <span class="stat-label">বাকি</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <p id="progressText" class="progress-text">0% কাজ সম্পন্ন</p>
+        </div>
+
+        <!-- সব মুছে ফেলুন -->
+        <div class="danger-zone">
+            <button class="btn-clear" onclick="clearAllTasks()">🗑️ সব কাজ মুছে ফেলুন</button>
+        </div>
+    </div>
+
+    <!-- অ্যালার্ম সাউন্ড -->
+    <audio id="alarmSound" preload="auto">
+        <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- রিমাইন্ডার পপআপ -->
+    <div id="reminderPopup" class="reminder-popup" style="display:none;">
+        <div class="reminder-content">
+            <span class="reminder-icon">⏰</span>
+            <h3>কাজের সময় হয়েছে!</h3>
+            <p id="reminderTaskName"></p>
+            <button onclick="dismissReminder()">ঠিক আছে, বুঝেছি ✓</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
